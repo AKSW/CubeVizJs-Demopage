@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Konrad Abicht, Michael Martin, Georges Alkhouri">
+
+    <title>CubeViz.js - Demo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link href="css/offcanvas.css" rel="stylesheet"/>
+
+    <link href="css/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <link href="css/prismjs/prism.css" rel="stylesheet"/>
+    <script type="text/javascript" src="css/prismjs/prism.js"></script>
+    <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+
+    <!-- CubeVizJS  -->
+    <script type="text/javascript" src="lib/cubevizjs/dist/cubeviz.min.js"></script>
+    <style type="text/css">
+      #cubevizapp .container {
+        width: auto;
+        padding: 0;
+        min-height: 450px;
+      }
+      .ex-demo-btn {
+        background: rgb(255, 64, 129) none repeat scroll 0% 0%;
+        color: white;
+        padding: 2px;
+        border-radius: 2px;
+      }
+    </style>
+
+    <!-- To avoid menu overlay anchor target -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // dive into click events for anchors
+            $('a[href*="#"]').click(function(e){
+                // get top and left position of the target element on the screen (using name approach)
+                var offset = $('[name="' + jQuery.attr(this, 'href').substr(1) + '"]').offset();
+                var top = 0;
+
+                if (null != offset) {
+                    top = offset.top;
+
+                // if name was not set, but id instead, use it
+                } else {
+                    top = $('[id="' + $.attr(this, 'href').substr(1) + '"]').offset().top;
+                }
+
+                // move the screen to the top coordinate minus the user given distance
+                $('html, body').animate({scrollTop: top - 70}, 500);
+            });
+        });
+    </script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#start">CubeViz-Demo</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#preconfigured">Case 1: About controlling CubeViz's user interface</a></li>
+            <li><a href="#userdefined">Case 2: About setup and integration of CubeViz</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container" id="start">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+
+          <div class="jumbotron">
+            <h1>CubeViz Demo</h1>
+            <p>We present two demo cases for CubeViz.js. Each case consists of a short introduction and a list of steps how to use it. Besides that, an introduction about the used data cube will be provided.
+
+            <br/>
+            <br/>
+
+            The first case presents a pre-configured instance and shows how to select and visualize data. The second one concerns how to setup and integrate CubeViz.
+            </p>
+          </div>
+
+          <br/>
+          <br/>
+
+          <h4>Target groups for this demo:</h4>
+          <ul>
+              <li><strong>Non-technical users</strong>, who want to use a tool for data exploration and visualization. Please start with <a href="#preconfigured">Case 1</a>.</li>
+              <li><strong>Technical users</strong>, who are interested in setup and integration of CubeViz. Please start with <a href="#userdefined">Case 2</a>.</li>
+          </ul>
+
+          <br/>
+          <br/>
+          <h4>Demo is splitted in the following cases:</h4>
+          <ul>
+              <li><a href="#preconfigured">Case 1: About controlling CubeViz's user interface</a></li>
+              <li><a href="#userdefined">Case 2: About setup and integration of CubeViz</a></li>
+          </ul>
+
+
+          <h2 id="preconfigured" style="margin-top: 80px;">Case 1: About controlling CubeViz's user interface</h2>
+          <div class="bg-info" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+              <h4><i class="fa fa-info"></i> &nbsp; About</h4>
+              In this case we show how a pre-configured CubeViz.js instance looks like. We defined a certain SPARQL endpoint as data source and set the ID, where CubeViz.js will be shown in the DOM later on. CubeViz.js is shipped as one file which contains all neccessary libraries and code. The purpose of this case is to show the JavaScript only implementation of the data selection and later visualization. It is still work in progress and provides only a fraction of the old CubeViz.
+          </div>
+          <div class="bg-success" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+              <h4><i class="fa fa-list"></i> &nbsp; How to use</h4>
+              Please see the running <em>CubeViz Demo Application</em> below. It is preconfigured and shows the data cube of a SPARQL endpoint as default selection. Follow this steps to finish the demo:
+              <br/>
+              <br/>
+              <ol>
+                  <li>Please click on <span class="ex-demo-btn">SELECT DATA</span> to see a list of available dimensions, which are separated into countries and years.</li>
+                  <li>Select Italy from the Country part and 2007, 2009 and 2011 from the Year part (multi-selection possible using <kbd>ctrl</kbd> or <kbd>shift</kbd> key, while selecting items.) and confirm with OK.</li>
+                  <li>After your selection, the underlying visualization should show a pie chart with procentual values about "% of basic public services for citizens, which are fully available online" in Italy in the selected years. If you hover the parts it shows the current value.</li>
+                  <li>There is another chart available. You can show it by clicking at <span class="ex-demo-btn">CHARTS</span> and select the bar chart.</li>
+              </ol>
+              <br />
+              Want to use your own data source? To do that, click on <span class="ex-demo-btn">INPUT SOURCE</span> and insert either a SPARQL endpoint, remote RDF file or upload your own RDF file. Be aware, CubeViz.js is currently not able to handle bigger files than 15 MB, access through SPARQL endpoints should not have such limitations. 
+          </div>
+
+
+          <div class="panel panel-default" style="margin-top: 50px;">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>CubeViz Demo Application</strong></h3>
+            </div>
+            <div class="panel-body demo" id="cubeviz-demo">
+
+            </div>
+          </div>
+
+          <script>
+            var configuration = {
+              data_source: {
+                  value: "http://sparql.cubevizjs.demo.aksw.org/sparql"
+              },
+              ui_container: 'cubeviz-demo',
+            };
+            var cubeViz = new CubeViz.default(configuration);
+            cubeViz.run();
+          </script>
+
+          <div style="margin-top: 50px;">
+              There is a jsfiddle snippet which represents the instance shown. On jsfiddle you can change the code online and play around. Dont worry, its in its own space and you cant break things. JSFiddle-Link: <a href="http://jsfiddle.net/zfpquu2e/2/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/zfpquu2e/2/</strong></a>
+          </div>
+
+          <div class="bg-warning" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+              <h4><i class="fa fa-cube"></i> &nbsp; About the used data cube</h4>
+              Here we use an adapted RDF-version of the Digital Agenda Scoreboard data cube of the European Commission. The Digital Agenda contains statistical information about key areas (e.g. \% of enterprises interacting online with public authorities) of European countries and outlines their performances per year. The original cube provides 3-dimensional data, but CubeViz.js can only handle 2-dimensional data, therefore a reduction was done. The raw data can be found <a href="https://github.com/AKSW/cubeviz.ontowiki/blob/master/assets/scoreboard-part-2-dimensional.ttl">here</a>.
+          </div>
+
+
+          <h2 id="userdefined" style="margin-top: 200px;">Case 2: About setup and integration of CubeViz</h2>
+
+          <div class="bg-info" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+              <h4><i class="fa fa-info"></i> &nbsp; About</h4>
+              In this case we show how to setup CubeViz: setup a data source and integrate it into DOM. You can define different kinds of data sources: SPARQL endpoint, RDF file and JSON-LD object. DOM-integration is done by set ID of the DOM element which contains the CubeViz container later on.
+              <br/>
+              <br/>
+              The whole process is simple and integration via DOM-ID is only the first step towards a more comprehensive integration (e.g. make UI elements styleable or use certain CSS-classes).
+          </div>
+          <div class="bg-success" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+              <h4><i class="fa fa-list"></i> &nbsp; How to read</h4>
+              To following description is based on the source code below. It describes neccessary steps to setup CubeViz.
+              <br/>
+              <br/>
+              <ol>
+                  <li><strong>Include CubeViz JavaScript file.</strong> We provide a minimized version through our Github repository which contains all required JavaScript code.</li>
+                  <li><strong>Set values for keys data_source and ui_container.</strong> Key data_source contains either an URL to a SPARQL endpoint or RDF file or an instance of JSON-LD object, with Data Cube information.</li>
+                  <li><strong>Create instance of CubeViz and pass on configuration.</strong> Doing that will led to an initialization of CubeViz container, but will not show the user interface.</li>
+                  <li><strong>Start CubeViz and show user interface.</strong> After you called the run method, the user interface will be load into the DOM-object, reference by the ID (ui_container).</li>
+              </ol>
+          </div>
+
+          <pre><code class="language-javascript" style="font-size: 16px;"
+>&lt;html&gt;
+    &lt;head&gt;
+        &lt;!-- Step 1: Include CubeViz JavaScript file --&gt;
+        &lt;script type="text/javascript"
+             src="https://raw.githubusercontent.com/AKSW/cubevizjs/develop/dist/cubeviz.min.js"&gt;&lt;/script&gt;
+
+        &lt;script type="text/javascript"&gt;
+            &lt;!-- Step 2: Create configuration: set data_source and ui_container value --&gt;
+            var configuration = {
+                // Configure URL to RDF file, which contains Data Cube information, to use as data source
+                data_source: {
+                    value: "https://raw.githubusercontent.com/AKSW/cubeviz.ontowiki/master/assets/serbia_fixed_duplicatedUnitMeasures.nt"
+                },
+                // ID of the DOM element which later includes CubeViz
+                ui_container: 'cubeviz',
+            };
+
+            &lt;!-- Step 3: Create instance of CubeViz and pass on configuration --&gt;
+            var cubeViz = new CubeViz(configuration);
+
+            &lt;!-- Step 4: Start CubeViz and show user interface --&gt;
+            cubeViz.run();
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id="cubeviz"&gt;&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+        <br/>
+        There is a jsfiddle snippet which represents the instance shown. On jsfiddle you can change the code online and play around. Dont worry, its in its own space and you cant break things. JSFiddle-Link: <a href="https://jsfiddle.net/28guyk6f/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/28guyk6f/</strong></a>
+
+        <div class="bg-warning" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+            <h4><i class="fa fa-cube"></i> &nbsp; About the used data cube</h4>
+            The data cube used in this case is about the gross of values added by activities in the Republic of Serbia of the years 2000 to 2009. The Source is the Statistical Office of the Republic of Serbia (<a href="http://www.stat.gov.rs/">www.stat.gov.rs/</a>) and the data where generated from <a href="http://webrzs.stat.gov.rs/WebSite/public/ReportView.aspx">webrzs.stat.gov.rs/WebSite/public/ReportView.aspx</a>. A clean data cube file is available <a href="https://github.com/AKSW/cubeviz.ontowiki/blob/master/assets/serbia_fixed_duplicatedUnitMeasures.nt">here</a>.
+        </div>
+
+
+        </div>
+
+      </div><!--/row-->
+
+      <div style="height: 250px;">
+
+      </div>
+
+
+      <hr>
+      <footer>
+        <p>&copy; 2016 - Konrad Abicht, Michael Martin, Georges Alkhouri.</p>
+      </footer>
+
+    </div><!--/.container-->
+
+  </body>
+</html>
