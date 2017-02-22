@@ -4,11 +4,15 @@ Contains the CubeVizJS Demo Site [cubevizjs.demo.aksw.org](http://cubevizjs.demo
 
 ## Build
 
-docker build -t cubevizjs.demo.aksw .
+docker build -t cubevizjs-demo-aksw .
 
 ## Run
 
-docker run -d --name cubevizjs.demo.aksw -p 80:80 cubevizjs.demo.aksw
+docker run -d --name cubevizjs-demo-aksw -p 80:80 cubevizjs-demo-aksw
+
+## Update
+
+To update the container after a change of the static HTML, simply run `docker restart cubevizjs-demo-aksw`. This will copy the content from [Github Reposity](https://github.com/AKSW/CubeVizJs-Demopage.git) to nginx html root.
 
 ## Requirements
 
