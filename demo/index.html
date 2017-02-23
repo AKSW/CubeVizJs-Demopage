@@ -24,7 +24,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 
     <!-- CubeVizJS  -->
-    <script type="text/javascript" src="http://rawgit.com/AKSW/cubevizjs/master/dist/cubeviz.min.js"></script>
+    <script type="text/javascript" src="http://rawgit.com/AKSW/cubevizjs/develop/dist/cubeviz.min.js"></script>
     <style type="text/css">
       #cubevizapp .container {
         width: auto;
@@ -32,8 +32,8 @@
         min-height: 450px;
       }
       .ex-demo-btn {
-        background: rgb(255, 64, 129) none repeat scroll 0% 0%;
-        color: white;
+        background: #fff;
+        color: #333;
         padding: 2px;
         border-radius: 2px;
       }
@@ -118,7 +118,11 @@
           <h4>Demo is splitted in the following cases:</h4>
           <ul>
               <li><a href="#preconfigured">Case 1: About controlling CubeViz's user interface</a></li>
-              <li><a href="#userdefined">Case 2: About setup and integration of CubeViz</a></li>
+              <li><a href="#userdefined">Case 2: About setup and integration of CubeViz</a>
+              <ul>
+                <li><a href="#extended">Extended interface configuration</a>
+              </ul>
+              </li>
           </ul>
 
 
@@ -133,13 +137,13 @@
               <br/>
               <br/>
               <ol>
-                  <li>Please click on <span class="ex-demo-btn">SELECT DATA</span> to see a list of available dimensions, which are separated into countries and years.</li>
+                  <li>Please click on <span class="ex-demo-btn">Dimensions</span> to see a list of available dimensions, here countries and years.</li>
                   <li>Select Italy from the Country part and 2007, 2009 and 2011 from the Year part (multi-selection possible using <kbd>ctrl</kbd> or <kbd>shift</kbd> key, while selecting items.) and confirm with OK.</li>
-                  <li>After your selection, the underlying visualization should show a pie chart with procentual values about "% of basic public services for citizens, which are fully available online" in Italy in the selected years. If you hover the parts it shows the current value.</li>
-                  <li>There is another chart available. You can show it by clicking at <span class="ex-demo-btn">CHARTS</span> and select the bar chart.</li>
+                  <li>After your selection, the underlying visualization should show a column chart with procentual values about "% of basic public services for citizens, which are fully available online" in Italy in the selected years.</li>
+                  <li>There are other charts available. Click on <span class="ex-demo-btn">Charts</span> and select the bar or pie chart to chang the visualization.</li>
               </ol>
               <br />
-              Want to use your own data source? To do that, click on <span class="ex-demo-btn">INPUT SOURCE</span> and insert either a SPARQL endpoint, remote RDF file or upload your own RDF file. Be aware, CubeViz.js is currently not able to handle bigger files than 15 MB, access through SPARQL endpoints should not have such limitations. 
+              Want to use your own data source? To do that, click on <span class="ex-demo-btn">Import</span> and insert either a SPARQL endpoint, remote RDF file or upload your own RDF file. Be aware, CubeViz.js is currently not able to handle bigger files than 15 MB, access through SPARQL endpoints should not have such limitations. 
           </div>
 
 
@@ -154,17 +158,20 @@
 
           <script>
             var configuration = {
-              data_source: {
-                  value: "http://sparql.cubevizjs.demo.aksw.org/sparql"
+              data_configuration: {
+                source: "http://sparql.cubevizjs.demo.aksw.org/sparql" 
               },
-              ui_container: 'cubeviz-demo',
+              ui_configuration: {
+                ui_container: 'cubeviz-demo'
+              }
             };
+
             var cubeViz = new CubeViz.default(configuration);
             cubeViz.run();
           </script>
 
           <div style="margin-top: 50px;">
-              There is a jsfiddle snippet which represents the instance shown. On jsfiddle you can change the code online and play around. Dont worry, its in its own space and you cant break things. JSFiddle-Link: <a href="http://jsfiddle.net/uq4t1d6j/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/uq4t1d6j/</strong></a>
+              There is a jsfiddle snippet which represents the instance shown. On jsfiddle you can change the code online and play around. Dont worry, its in its own space and you cant break things. JSFiddle-Link: <a href="http://jsfiddle.net/6j1scftp/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/6j1scftp/</strong></a>
           </div>
 
           <div class="bg-warning" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
@@ -181,6 +188,9 @@
               <br/>
               <br/>
               The whole process is simple and integration via DOM-ID is only the first step towards a more comprehensive integration (e.g. make UI elements styleable or use certain CSS-classes).
+              <br/>
+              <br/>
+              Below the simple integration all configuration possibilities are listed, e.g. how to hide the user interface elements.
           </div>
           <div class="bg-success" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
               <h4><i class="fa fa-list"></i> &nbsp; How to read</h4>
@@ -200,17 +210,19 @@
     &lt;head&gt;
         &lt;!-- Step 1: Include CubeViz JavaScript file --&gt;
         &lt;script type="text/javascript"
-             src="https://rawgit.com/AKSW/cubevizjs/master/dist/cubeviz.min.js"&gt;&lt;/script&gt;
+             src="https://rawgit.com/AKSW/cubevizjs/develop/dist/cubeviz.min.js"&gt;&lt;/script&gt;
 
         &lt;script type="text/javascript"&gt;
             &lt;!-- Step 2: Create configuration: set data_source and ui_container value --&gt;
             var configuration = {
-                // Configure URL to RDF file, which contains Data Cube information, to use as data source
-                data_source: {
-                    value: "https://rawgit.com/AKSW/cubeviz.ontowiki/master/assets/serbia_fixed_duplicatedUnitMeasures.nt"
-                },
+              data_configuration: {
+                // Configure URL to RDF file or SPARQL endpoint, which contains Data Cube information, to use as data source
+                source: 'https://rawgit.com/AKSW/cubeviz.ontowiki/master/assets/serbia.n3',
+              },
+            ui_configuration: {
                 // ID of the DOM element which later includes CubeViz
-                ui_container: 'cubeviz',
+                ui_container: 'cubeviz'
+              }
             };
 
             &lt;!-- Step 3: Create instance of CubeViz and pass on configuration --&gt;
@@ -223,16 +235,48 @@
     &lt;body&gt;
         &lt;div id="cubeviz"&gt;&lt;/div&gt;
     &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+&lt;/html&gt;</code></pre>
 
         <br/>
-        There is a jsfiddle snippet which represents the instance shown. On jsfiddle you can change the code online and play around. Dont worry, its in its own space and you cant break things. JSFiddle-Link: <a href="https://jsfiddle.net/0tLb7t3f/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/0tLb7t3f/</strong></a>
+        There is a jsfiddle snippet which represents the instance shown. On jsfiddle you can change the code online and play around. Dont worry, its in its own space and you cant break things. JSFiddle-Link: <a href="https://jsfiddle.net/bwm3gw47/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/bwm3gw47/</strong></a>
 
         <div class="bg-warning" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
             <h4><i class="fa fa-cube"></i> &nbsp; About the used data cube</h4>
-            The data cube used in this case is about the gross of values added by activities in the Republic of Serbia of the years 2000 to 2009. The Source is the Statistical Office of the Republic of Serbia (<a href="http://www.stat.gov.rs/">www.stat.gov.rs/</a>) and the data where generated from <a href="http://webrzs.stat.gov.rs/WebSite/public/ReportView.aspx">webrzs.stat.gov.rs/WebSite/public/ReportView.aspx</a>. A clean data cube file is available <a href="https://github.com/AKSW/cubeviz.ontowiki/blob/master/assets/serbia_fixed_duplicatedUnitMeasures.nt">here</a>.
+            The data cube used in this case is about the gross of values added by activities in the Republic of Serbia of the years 2000 to 2009. The Source is the Statistical Office of the Republic of Serbia (<a href="http://www.stat.gov.rs/">www.stat.gov.rs/</a>) and the data where generated from <a href="http://webrzs.stat.gov.rs/WebSite/public/ReportView.aspx">webrzs.stat.gov.rs/WebSite/public/ReportView.aspx</a>. A clean data cube file is available <a href="https://github.com/AKSW/cubeviz.ontowiki/blob/master/assets/serbia.n3">here</a>.
         </div>
+
+        <h3 id="extended" style="margin-top: 100px;"><i class="fa fa-hand-o-right"></i> &nbsp; Extended configuration</h3>
+        <div class="bg-success" style="border-radius: 5px; padding: 20px; margin-top: 20px; margin-bottom: 20px;">
+              Beside the data-source and ui-container, there are some extended configuration possibilities to control CubeVizjs interface. For example all of the interface elements may be hidden to show only the chart.
+
+              All current settings are given in the following example:
+        </div>
+
+        <pre><code class="language-javascript" style="font-size: 16px;"
+>var configuration = {
+  data_configuration: {
+    // (String) URL to RDF cube or Sparql endpoint
+    source: 'https://rawgit.com/AKSW/cubeviz.ontowiki/master/assets/serbia.n3',
+    // (String) ID of default measure
+    measure: 'http://purl.org/linked-data/sdmx/2009/measure#obsValue',
+    // (String) ID of default attribute
+    attribute: 'http://elpo.stat.gov.rs/lod2/RS-DIC/esa95-unit/RT_GDP',
+    // (Array of Strings) IDs if shown dimension elements
+    dimension_elements: ['http://elpo.stat.gov.rs/lod2/RS-DIC/time/Y2006', 'http://elpo.stat.gov.rs/lod2/RS-DIC/time/Y2009'],
+  },
+  ui_configuration: {
+    // (String) ID of target DOM element
+    ui_container: 'cubeviz',
+    // (Boolean) Show or hide all interface elements
+    show_ui_elements: false,
+    // (String) Name of the chart: heatmap|column|pie
+    chart_name: 'column'
+  }
+};</code></pre>
+
+        
+        <br/>
+        An Jsfiddle playground with all these configuration settings ca be found here. JSFiddle-Link: <a href="https://jsfiddle.net/9bo7ao4v/" class="btn btn-success"><i class="fa fa-jsfiddle" aria-hidden="true"></i> <strong>jsfiddle.net/9bo7ao4v/</strong></a>
 
 
         </div>
